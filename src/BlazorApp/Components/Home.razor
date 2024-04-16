@@ -3,18 +3,38 @@
     {
         <img class="background" src="@(hero.Src)" alt="@(hero.Alt)" />
     }
-    <div style="position: absolute; top: 30%; left: 2rem;">
-    @if (property is null)
-    {
-        <p><em>Loading...</em></p>
-    }
-    else
-    {
-        <h1>@property.Name</h1>
-        <h2>@property.Title</h2>
-    }
+    <div style="position: absolute; top: 50%; left: 2rem; transform: translateY(-50%);">
+        @if (property is null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <h1>@property.Name</h1>
+            <h2>@property.Title</h2>
+            <br />
+            <br />
+            <h4>This WebSite was made using Blazor and .NET 8</h4>
+        }
     </div>
-    <div style="position: absolute; bottom: 8rem; left: 50%;">
+    @if (property is not null && icons is not null)
+    {
+        <div style="position: absolute; bottom: 5rem; left: 1%; display: flex; gap: 1rem;">
+            @if (!string.IsNullOrWhiteSpace(property.GitHub))
+            {
+                <a href="https://github.com/@(property.GitHub)" target="_blank" rel="noopener noreferrer">
+                    <img src="@icons.GitHub" alt="GitHub" class="social-icon" />
+                </a>
+            }
+            @if (!string.IsNullOrWhiteSpace(property.LinkedIn))
+            {
+                <a href="https://linkedin.com/in/@(property.LinkedIn)" target="_blank" rel="noopener noreferrer">
+                    <img src="@icons.LinkedIn" alt="LinkedIn" class="social-icon" />
+                </a>
+            }
+        </div>
+    }
+    <div style="position: absolute; bottom: 8rem; left: 50%; transform: translateX(-50%);">
         <a href="#about" target="_top">
             <img src="images/down-arrow.svg" style="height: 3rem; width: 3rem;" alt="scroll down" />
         </a>
@@ -29,11 +49,13 @@
     public required HeroImageService HeroImageService { get; set; }
 
     private SiteProperties? property;
+    private SocialIcons? icons;
     private HeroImage? hero;
 
     protected override async Task OnInitializedAsync()
     {
         property = await Http.GetFromJsonAsync<SiteProperties>("sample-data/siteproperties.json");
+        icons = await Http.GetFromJsonAsync<SocialIcons>("sample-data/socialicons.json");
         hero = await HeroImageService.GetHeroAsync(img => img.Name is "home");
     }
 }

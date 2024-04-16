@@ -1,31 +1,35 @@
+<style>
+    .portfolio-container .container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* Cria quatro colunas de tamanho igual */
+        gap: 20px; /* Espaçamento entre as caixas */
+        justify-content: center; /* Centraliza o conteúdo horizontalmente */
+        align-items: start; /* Alinha os itens ao topo de suas células */
+    }
+</style>
+
 <section class="light" id="portfolio">
     <h2>Portfolio</h2>
     <div class="portfolio-container">
-    @if (projects is null)
-    {
-        <p><em>Loading...</em></p>
-    }
-    else
-    {
-        <div class="portfolio-hero">
-            @if (hero is not null)
-            {
-                <img src="@(hero.Src)" style="height: 90%; width: 100%; object-fit: cover;" 
-                    alt="@(hero.Alt)" />
-            }
-        </div>
-        <div class="container">
-            @foreach (var project in projects)
-            {
-                <div class="box" key="@project.Title">
-                    <a href="@project.Url" target="_blank" rel="noopener noreferrer">
-                        <h3 style="flex-basis: 40px;">@project.Title</h3>
-                    </a>
-                    <p class="small">@project.Description</p>
-                </div>
-            }
-        </div>
-    }
+        @if (projects is null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <div class="container">
+                @foreach (var project in projects.Take(4))
+                {
+                    <div class="box" key="@project.Title">
+                        <a href="@project.Url" target="_blank" rel="noopener noreferrer">
+                            <h3 style="flex-basis: 40px;">@project.Title</h3>
+                        </a>
+                        <p class="small">@project.Description</p>
+                    </div>
+                }
+            </div>
+
+        }
     </div>
 </section>
 
