@@ -1,9 +1,9 @@
-# .NET 8 (Blazor) Portfolio Site
+# .NET Blazor Portfolio Site
 
-This project is my personal Portfolio made with .NET 8 using Blazor Framework.
+This project is my personal Portfolio made with .NET 9 using Blazor Framework.
 
 ## Technologies
-- .NET 8
+- .NET 9
 - Blazor
 - Published on Github Pages using Github Actions
 
